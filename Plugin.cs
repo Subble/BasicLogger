@@ -1,6 +1,7 @@
 ﻿using Subble.Core;
+using Subble.Core.Logger;
 using Subble.Core.Plugin;
-using System;
+
 using System.Collections.Generic;
 
 namespace BasicLogger
@@ -13,14 +14,20 @@ namespace BasicLogger
         public SemVersion Version
             => new SemVersion(0, 0, 1);
 
-        public long LoadPriority => 3;
+        public long LoadPriority => 5;
 
         public IEnumerable<Dependency> Dependencies
             => new List<Dependency>();
 
         public bool Initialize(ISubbleHost host)
         {
-            return true;
+            if (host is null)
+                return false;
+
+            var logger = new Logger(host);
+            host.ServiceContainer.RegisterService<ILogger>(logger, Version);
+
+            return false;
         }
     }
 }
