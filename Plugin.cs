@@ -25,9 +25,7 @@ namespace BasicLogger
                 return false;
 
             var logger = new Logger(host);
-            host.ServiceContainer.RegisterService<ILogger>(logger, Version);
-
-            return false;
+            return host.ServiceContainer.RegisterService<ILogger>(logger, Version);
         }
     }
 }
